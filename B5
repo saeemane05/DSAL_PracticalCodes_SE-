@@ -1,0 +1,177 @@
+#include <iostream>
+#include <cstdlib>
+#include <string.h>
+
+using namespace std ;
+
+struct node
+{
+string label ;
+int ch_count ;
+
+struct node *child[10] ;
+
+}
+*root ;
+
+class GT
+{
+public:
+
+GT()
+{
+root = NULL ;
+
+}
+string lbl ;
+int count ;
+int i , j , k ;
+
+void create()
+{
+
+root = new node ;
+
+cout<<"NAME OF THE BOOK::";
+cin>>root->label ;
+
+cout<<"NO OF CHAPTERS::";
+cin>>root->ch_count ;
+
+for (int i = 0 ; i<root->ch_count ; i++)
+{
+
+cout<<"CHAPTERS:"<<endl ;
+
+root->child[i] = new node ;
+
+cout<<"ENTER THE CHAPTER NAME::";
+cin>>root->child[i]->label ;
+
+cout<<"ENTER THE NUMBER OF SECTIONS::";
+cin>>root->child[i]->ch_count ;
+
+for(j = 0 ; j<root->child[i]->ch_count ; j++)
+{
+cout<<"SECTIONS::"<<endl ;
+
+root->child[i]->child[j] = new node ;
+
+cout<<"ENTER THE NAME OF THE SECTIONS::";
+cin>>root->child[i]->child[j]->label ;
+
+cout<<"ENTER THE NUMBER OF SUBSECTIONS::";
+cin>>root->child[i]->child[j]->ch_count ;
+
+for(k = 0 ;k<root->child[i]->child[j]->ch_count ; k++)
+{
+cout<<"SUBSECTIONS:"<<endl ;
+
+root->child[i]->child[j]->child[k] = new node ;
+
+cout<<"ENTER THE NAME OF SUBSECTIONS::"<<i+1<<"->"<<j+1<<"->"<<k+1<<"\t";
+cin>>root->child[i]->child[j]->label ;
+
+
+
+}
+}
+}
+}
+
+void display(node *r1)
+{
+
+if (r1!=NULL)
+{
+cout<<"BOOK NAME::"<<root->label<<endl ;
+
+
+cout<<"NUMBER OF CHAPTERS::"<<root->ch_count<<endl ;
+
+for(i = 0 ; i<root->ch_count ; i++)
+{
+
+cout<<"NAME OF CHAPTER:"<<root->child[i]->label<<endl ;
+
+cout<<"NUMBER OF SECTIONS::"<<root->child[i]->ch_count<<endl ;
+
+
+for(j = 0 ; j<root->child[i]->ch_count ; j++)
+{
+
+cout<<"NAME OF SECTION::"<<root->child[i]->child[j]->label<<endl ;
+
+cout<<"NUMBER OF SUBSECTIONS::"<<root->child[i]->ch_count<<endl ;
+
+for(k = 0 ; k<root->child[i]->child[j]->ch_count ; k++)
+{
+
+cout<<"NAME OF SUBSECTIONS::"<<root->child[i]->child[j]->label ;
+
+}
+}
+
+}
+}
+else
+{
+cout<<"BOOK NOT CREATED."<<endl ;
+}
+
+}
+
+};
+
+int main()
+{
+GT g ;
+int choice ;
+int ans;
+
+
+while (true)
+{
+cout<<"<----MENU---->"<<endl ;
+cout<<"1.CREATE BOOK:\n2.DISPLAY:3.EXIT\n";
+
+cout<<"ENTER YOUR CHOICE::";
+cin>>choice ;
+
+switch(choice)
+{
+
+case 1:
+{
+
+g.create() ;
+break ;
+
+}
+case 2:
+{
+g.display(root) ;
+break ;
+
+}
+case 3:
+{
+cout<<"EXITING..THANK YOU."<<endl ;
+break ;
+}
+default:
+{
+cout<<"INVALID , TRY AGAIN!"<<endl ;
+
+}
+}
+while(choice!=3) ;
+
+cout<<"DO YOU WANT TO CONTINUE?(1/0)::";
+cin>>ans ;
+
+
+}
+return 0 ;
+
+}
