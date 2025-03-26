@@ -10,286 +10,286 @@ H. DIFFERENCE BETWEEN TWO SETS.
 I. SUBSET.
 
 class Set:
-def __init__(self, elements=None):
-self.data = []
-if elements:
-for item in elements:
-self.add(item)
+  def __init__(self, elements=None):
+    self.data = []
+    if elements:
+      for item in elements:
+      self.add(item)
 
-def add(self, element):
+  def add(self, element):
 
-for item in self.data:
+    for item in self.data:
 
-if item == element:
+    if item == element:
 
-return
+      return
 
-self.data += [element]
+      self.data += [element]
 
-print(f"Element {element} added to the set.")
+    print(f"Element {element} added to the set.")
 
 
 
-def remove(self, element):
+  def remove(self, element):
 
-found = False
+    found = False
 
-for i in range(len(self.data)):
+    for i in range(len(self.data)):
 
-if self.data[i] == element:
+      if self.data[i] == element:
 
-found = True
+        found = True
 
-break
-if found == False:
+        break
 
-print("ELEMENT NOT PRESENT...")
+      if found == False:
 
-def contains(self, element):
+        print("ELEMENT NOT PRESENT...")
 
-if element in self.data:
+  def contains(self, element):
 
-print(f"ELEMENT {element} FOUND!")
+    if element in self.data:
 
-return True
+      print(f"ELEMENT {element} FOUND!")
 
-else:
-print("ELEMENT NOT FOUND!")
+      return True
 
-return False
+    else:
+      print("ELEMENT NOT FOUND!")
 
+      return False
 
 
-def size(self):
-return len(self.data)
 
+  def size(self):
+    return len(self.data)
 
-def intersection(self, other):
 
-result = Set()
+  def intersection(self, other):
 
-for i in self.data:
+    result = Set()
 
-found = False
+    for i in self.data:
 
-for j in result.data:
+      found = False
 
-if i == j:
-found = True
-break
+      for j in result.data:
 
-if found:
+        if i == j:
+          found = True
+          break
 
-result.data += [i]
+        if found:
 
-print("INTERSECTION OF THE TWO SETS IS:", result.data)
+          result.data += [i]
 
+          print("INTERSECTION OF THE TWO SETS IS:", result.data)
 
-def union(self, other):
 
-result = Set(self.data)
+  def union(self, other):
 
-for i in self.data:
+    result = Set(self.data)
 
-found = False
+    for i in self.data:
 
-for j in result.data:
+      found = False
 
-if i == j :
+      for j in result.data:
 
-found = True
-break
+        if i == j :
 
-if found == False:
-result.data += [i]
+        found = True
+        break
 
-print("UNION OF THE TWO SETS IS:", result.data)
+        if found == False:
+          result.data += [i]
 
+          print("UNION OF THE TWO SETS IS:", result.data)
+  
 
 
-def difference(self, other):
+  def difference(self, other):
 
-result = Set()
+    result = Set()
 
-for i in self.data:
+    for i in self.data:
 
-found = False
+      found = False
 
-for j in result.data:
+      for j in result.data:
 
-if i == j :
+        if i == j :
 
-found = True
-break
+          found = True
+          break
 
-if found == False:
-result.data += [i]
+      if found == False:
+        result.data += [i]
 
-print("DIFFERENCE OF THE TWO SETS IS:", result.data)
+        print("DIFFERENCE OF THE TWO SETS IS:", result.data)
 
 
-def subset(self, other):
+  def subset(self, other):
 
-for i in self.data:
+    for i in self.data:
 
-if i not in other.data:
+      if i not in other.data:
 
-return False
+        return False
 
-return True
+      return True
 
 
-def __iter__(self):
+  def __iter__(self):
 
-print("USE OF ITERATOR:")
+    print("USE OF ITERATOR:")
 
-return iter(self.data)
+    return iter(self.data)
 
-def main():
-set1 = Set()
-set2 = Set()
+  def main():
+    set1 = Set()
+    set2 = Set()
 
-while True:
-print("\n<----SET OPERATIONS MENU---->")
-print("1. ADD ELEMENT IN SET A")
-print("2. ADD ELEMENT IN SET B")
-print("3. REMOVE ELEMENT FROM SET A")
-print("4. REMOVE ELEMENT FROM SET B")
-print("5. CHECK IF ELEMENT EXISTS IN SET A")
-print("6. CHECK IF ELEMENT EXISTS IN SET B")
-print("7. DISPLAY SIZE OF SET A")
-print("8. DISPLAY SIZE OF SET B")
-print("9. UNION OF SET A AND SET B")
-print("10. INTERSECTION OF SET A AND SET B")
-print("11. DIFFERENCE => SET A - SET B")
-print("12. DIFFERENCE => SET B - SET A")
-print("13. CHECK IF SET A IS A SUBSET OF SET B")
-print("14. CHECK IF SET B IS A SUBSET OF SET A")
-print("15. DISPLAY SET A")
-print("16. DISPLAY SET B")
-print("17. ITERATOR OVER THE SET A")
-print("18. ITERATOR OVER THE SET B")
-print("19. EXIT")
+  while True:
+    print("\n<----SET OPERATIONS MENU---->")
+    print("1. ADD ELEMENT IN SET A")
+    print("2. ADD ELEMENT IN SET B")
+    print("3. REMOVE ELEMENT FROM SET A")
+    print("4. REMOVE ELEMENT FROM SET B")
+    print("5. CHECK IF ELEMENT EXISTS IN SET A")
+    print("6. CHECK IF ELEMENT EXISTS IN SET B")
+    print("7. DISPLAY SIZE OF SET A")
+    print("8. DISPLAY SIZE OF SET B")
+    print("9. UNION OF SET A AND SET B")
+    print("10. INTERSECTION OF SET A AND SET B")
+    print("11. DIFFERENCE => SET A - SET B")
+    print("12. DIFFERENCE => SET B - SET A")
+    print("13. CHECK IF SET A IS A SUBSET OF SET B")
+    print("14. CHECK IF SET B IS A SUBSET OF SET A")
+    print("15. DISPLAY SET A")
+    print("16. DISPLAY SET B")
+    print("17. ITERATOR OVER THE SET A")
+    print("18. ITERATOR OVER THE SET B")
+    print("19. EXIT")
 
-choice = int(input("ENTER YOUR CHOICE: "))
+    choice = int(input("ENTER YOUR CHOICE: "))
 
-if choice == 1:
+    if choice == 1:
 
-element = int(input("Enter element to add to Set A: "))
-set1.add(element)
+      element = int(input("Enter element to add to Set A: "))
+      set1.add(element)
 
 
-elif choice == 2:
+    elif choice == 2:
 
-element = int(input("Enter element to add to Set B: "))
-set2.add(element)
+      element = int(input("Enter element to add to Set B: "))
+      set2.add(element)
 
 
-elif choice == 3:
+    elif choice == 3:
 
-element = int(input("Enter element to remove from Set A: "))
-set1.remove(element)
+      element = int(input("Enter element to remove from Set A: "))
+      set1.remove(element)
 
 
-elif choice == 4:
+    elif choice == 4:
 
-element = int(input("Enter element to remove from Set B: "))
-set2.remove(element)
+      element = int(input("Enter element to remove from Set B: "))
+      set2.remove(element)
 
 
-elif choice == 5:
+    elif choice == 5:
 
-element = int(input("Enter element to check in Set A: "))
-set1.contains(element)
+      element = int(input("Enter element to check in Set A: "))
+      set1.contains(element)
 
 
-elif choice == 6:
+    elif choice == 6:
 
-element = int(input("Enter element to check in Set B: "))
-set2.contains(element)
+      element = int(input("Enter element to check in Set B: "))
+      set2.contains(element)
 
 
-elif choice == 7:
+    elif choice == 7:
 
-print(f"Size of Set A: {set1.size()}")
+      print(f"Size of Set A: {set1.size()}")
 
 
-elif choice == 8:
+    elif choice == 8:
 
-print(f"Size of Set B: {set2.size()}")
+      print(f"Size of Set B: {set2.size()}")
 
 
-elif choice == 9:
+    elif choice == 9:
 
-set1.union(set2)
+      set1.union(set2)
 
 
-elif choice == 10:
+    elif choice == 10:
 
-set1.intersection(set2)
+      set1.intersection(set2)
 
 
-elif choice == 11:
+    elif choice == 11:
 
-set1.difference(set2)
+      set1.difference(set2)
 
 
-elif choice == 12:
+    elif choice == 12:
 
-set2.difference(set1)
+      set2.difference(set1)
 
 
-elif choice == 13:
+    elif choice == 13:
 
-if set1.subset(set2):
+      if set1.subset(set2):
 
-print("Set A is a subset of Set B.")
+        print("Set A is a subset of Set B.")
 
-else:
+      else:
 
-print("Set A is NOT a subset of Set B.")
+        print("Set A is NOT a subset of Set B.")
 
 
-elif choice == 14:
+    elif choice == 14:
 
+      if set2.subset(set1):
 
-if set2.subset(set1):
+        print("Set B is a subset of Set A.")
 
-print("Set B is a subset of Set A.")
+      else:
+        print("Set B is NOT a subset of Set A.")
 
-else:
-print("Set B is NOT a subset of Set A.")
+    elif choice == 15:
 
-elif choice == 15:
+        print("Set A:", set1.data)
 
-print("Set A:", set1.data)
 
+    elif choice == 16:
 
-elif choice == 16:
+      print("Set B:", set2.data)
 
-print("Set B:", set2.data)
 
+    elif choice == 17:
 
-elif choice == 17:
+      print("USING ITERATOR FOR Set A:", list(set1))
 
-print("USING ITERATOR FOR Set A:", list(set1))
 
+    elif choice == 18:
 
-elif choice == 18:
+      print("USING ITERATOR FOR Set B:", list(set2))
 
-print("USING ITERATOR FOR Set B:", list(set2))
 
+    elif choice == 19:
 
-elif choice == 19:
+      print("Exiting program...")
 
-print("Exiting program...")
 
+      break
 
-break
+    else:
 
-else:
-
-print("Invalid choice, please enter a valid option!")
+      print("Invalid choice, please enter a valid option!")
 
 
 
