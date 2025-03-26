@@ -1,0 +1,227 @@
+#include <iostream>
+using namespace std;
+
+class Stack {
+public:
+    int n;
+    int top;
+    int* vertex;
+
+    Stack(int size) {
+        n = size;
+        top = -1;
+        vertex = new int[n];
+    }
+
+    ~Stack() {
+        delete[] vertex;
+    }
+
+    bool IsEmpty() {
+        return top == -1;
+    }
+
+    bool IsFull() {
+        return top == n - 1;
+    }
+
+    void push(int x) {
+        if (!IsFull()) {
+            vertex[++top] = x;
+        } else {
+            cout << "STACK IS FULL." << endl;
+        }
+    }
+
+    int pop() {
+        if (!IsEmpty()) {
+            return vertex[top--];
+        } else {
+            cout << "STACK IS EMPTY." << endl;
+            return -1;
+        }
+    }
+};
+
+// DFS Class (Removed Inheritance from Stack)
+class DFS {
+public:
+    int n;
+    int visited[10] = {0};
+    int graph[10][10];
+    char vertex_labels[10];
+    Stack stack; 
+
+    DFS(int size) : n(size), stack(size) {
+        for (int i = 0; i < n; i++) {
+            vertex_labels[i] = 'A' + i;
+            for (int j = 0; j < n; j++) {
+                graph[i][j] = 0;
+            }
+        }
+    }
+
+    void add_edge(int u, int v) {
+        graph[u][v] = 1;
+        graph[v][u] = 1;
+    }
+
+    void resetVisited() {
+        for (int i = 0; i < n; i++) visited[i] = 0;
+    }
+
+    void dfs(int start) {
+        stack.push(start);
+
+        while (!stack.IsEmpty()) {
+            int vertex = stack.pop();
+
+            if (!visited[vertex]) {
+                cout << "Visited: " << vertex_labels[vertex] << endl;
+                visited[vertex] = 1;
+
+                for (int i = n - 1; i >= 0; i--) {
+                    if (graph[vertex][i] == 1 && visited[i] == 0) {
+                        stack.push(i);
+                    }
+                }
+            }
+        }
+    }
+};
+
+// Queue for BFS using linked list
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int val) {
+        data = val;
+        next = nullptr;
+    }
+};
+
+class Queue {
+public:
+    Node* front;
+    Node* rear;
+
+    Queue() {
+        front = rear = nullptr;
+    }
+
+    bool isEmpty() {
+        return front == nullptr;
+    }
+
+    void enqueue(int val) {
+        Node* temp = new Node(val);
+        if (rear == nullptr) {
+            front = rear = temp;
+            return;
+        }
+        rear->next = temp;
+        rear = temp;
+    }
+
+    int dequeue() {
+        if (isEmpty()) {
+            cout << "QUEUE IS EMPTY." << endl;
+            return -1;
+        }
+        int val = front->data;
+        Node* temp = front;
+        front = front->next;
+        if (front == nullptr) {
+            rear = nullptr;
+        }
+        delete temp;
+        return val;
+    }
+};
+
+class BFS {
+public:
+    int n;
+    int visited[10] = {0};
+    int graph[10][10];
+    char vertex_labels[10];
+
+    BFS(int size) {
+        n = size;
+        for (int i = 0; i < n; i++) {
+            vertex_labels[i] = 'A' + i;
+            for (int j = 0; j < n; j++) {
+                graph[i][j] = 0;
+            }
+        }
+    }
+
+    void add_edge(int u, int v) {
+        graph[u][v] = 1;
+        graph[v][u] = 1;
+    }
+
+    void resetVisited() {
+        for (int i = 0; i < n; i++) visited[i] = 0;
+    }
+
+    void bfs(int start) {
+        Queue q;
+        q.enqueue(start);
+        visited[start] = 1;
+
+        while (!q.isEmpty()) {
+            int vertex = q.dequeue();
+            cout << "Visited: " << vertex_labels[vertex] << endl;
+
+            for (int i = 0; i < n; i++) {
+                if (graph[vertex][i] == 1 && visited[i] == 0) {
+                    q.enqueue(i);
+                    visited[i] = 1;
+                }
+            }
+        }
+    }
+};
+
+int main() {
+    int n;
+    cout << "ENTER THE NUMBER OF VERTICES: ";
+    cin >> n;
+
+    DFS D(n);
+    BFS B(n);
+
+    cout << "ENTER THE ADJACENCY MATRIX:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> D.graph[i][j];
+            B.graph[i][j] = D.graph[i][j]; // Copy adjacency matrix
+        }
+    }
+
+    cout << "Graph representation:\n";
+    for (int i = 0; i < n; i++) {
+        cout << D.vertex_labels[i] << " : ";
+        for (int j = 0; j < n; j++) {
+            cout << D.graph[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    int startVertex;
+    cout << "ENTER THE STARTING VERTEX (0 for A, 1 for B, etc.): ";
+    cin >> startVertex;
+
+    cout << "\nDepth First Search (DFS):\n";
+    D.resetVisited();
+    D.dfs(startVertex);
+
+    cout << "\nBreadth First Search (BFS):\n";
+    B.resetVisited();
+    B.bfs(startVertex);
+
+    return 0;
+}
