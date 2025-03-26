@@ -1,0 +1,271 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    string keyword, meaning;
+    Node *left, *right;
+
+    Node(string k, string m) {
+        keyword = k;
+        meaning = m;
+        left = right = NULL;
+    }
+};
+
+class Dictionary {
+    Node* root;
+
+    Node* insert(Node* root, string k, string m) {
+        if (!root) 
+            return new Node(k, m);
+
+        if (k < root->keyword) 
+            root->left = insert(root->left, k, m);
+            
+        else if (k > root->keyword) 
+            root->right = insert(root->right, k, m);
+
+        return root;
+    }
+
+    Node* search(Node* root, string k)
+	{
+        if (!root || root->keyword == k) 
+            return root;
+
+        if (k < root->keyword) 
+            return search(root->left, k);
+
+        return search(root->right, k);
+    }
+
+    void inorder(Node* root) {
+        if (!root) 
+            return;
+
+        inorder(root->left);
+        cout << root->keyword << " : " << root->meaning << endl;
+        inorder(root->right);
+    }
+
+    void reverseInorder(Node* root) {
+        if (!root) 
+            return;
+
+        reverseInorder(root->right);
+        cout << root->keyword << " : " << root->meaning << endl;
+        reverseInorder(root->left);
+    }
+
+    Node* findMin(Node* root)
+	{
+        while (root && root->left) 
+            root = root->left;
+            
+        return root;
+    }
+
+    Node* deleteNode(Node* root, string k) 
+	{
+        if (!root) 
+            return NULL;
+
+        if (k < root->keyword) 
+            root->left = deleteNode(root->left, k);
+            
+        else if (k > root->keyword) 
+            root->right = deleteNode(root->right, k);
+            
+        else
+		{
+            if (!root->left) {
+                Node* temp = root->right;
+                delete root;
+                return temp;
+            } 
+            
+        else if (!root->right) 
+		{
+                Node* temp = root->left;
+                delete root;
+                return temp;
+        }
+
+            
+	    Node* temp = findMin(root->right);
+            root->keyword = temp->keyword;
+            root->meaning = temp->meaning;
+            root->right = deleteNode(root->right, temp->keyword);
+        }
+        
+        return root;
+    }
+
+public:
+    Dictionary() 
+	{ 
+        root = NULL; 
+    }
+
+    void add(string k, string m) 
+	{ 
+        root = insert(root, k, m); 
+    }
+
+    void update(string k, string newMeaning) 
+	{
+        Node* node = search(root, k);
+        
+        if (node) 
+            node->meaning = newMeaning;
+            
+        else 
+            cout << "Keyword not found!" << endl;
+    }
+
+    void remove(string k) 
+	{ 
+        root = deleteNode(root, k); 
+    }
+
+    void display(bool ascending = true) 
+	{ 
+        if (ascending) 
+            inorder(root); 
+        else 
+            reverseInorder(root);
+    }
+
+    void find(string k) 
+	{
+        Node* node = search(root, k);
+        
+        if (node) 
+            cout << "Found: " << node->keyword << " -> " << node->meaning << endl;
+            
+        else 
+            cout << "Keyword not found!" << endl;
+    }
+
+    void findMinimum() 
+	{
+        Node* node = findMin(root);
+        
+        if (node) 
+            cout << "Minimum keyword: " << node->keyword << " -> " << node->meaning << endl;
+        else 
+            cout << "Dictionary is empty!" << endl;
+    }
+};
+
+int main() 
+{
+    Dictionary dict;
+    int choice, n;
+    string keyword, meaning;
+
+    cout << "Enter number of keywords: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) 
+	{
+        cout << "Enter keyword: ";
+        cin >> keyword;
+        
+        cout << "Enter meaning: ";
+        cin.ignore();
+        
+        getline(cin, meaning);
+        
+        dict.add(keyword, meaning);
+        
+    }
+
+    do {
+        cout << "\nChoose an operation:\n";
+        cout << "1. Add Keyword\n";
+        cout << "2. Update Meaning\n";
+        cout << "3. Delete Keyword\n";
+        cout << "4. Search Keyword\n";
+        cout << "5. Display Dictionary (Ascending Order)\n";
+        cout << "6. Display Dictionary (Descending Order)\n";
+        cout << "7. Find Minimum Keyword\n";
+        cout << "8. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice) 
+		{
+            case 1:
+                cout << "Enter keyword: ";
+                cin >> keyword;
+                
+                cout << "Enter meaning: ";
+                cin.ignore();
+                
+                getline(cin, meaning);
+                
+                dict.add(keyword, meaning);
+                
+                break;
+
+            case 2:
+                cout << "Enter keyword to update: ";
+                cin >> keyword;
+                
+                cout << "Enter new meaning: ";
+                cin.ignore();
+                
+                getline(cin, meaning);
+                
+                dict.update(keyword, meaning);
+                
+                break;
+
+            case 3:
+                cout << "Enter keyword to delete: ";
+                cin >> keyword;
+                
+                dict.remove(keyword);
+                
+                break;
+
+            case 4:
+                cout << "Enter keyword to search: ";
+                cin >> keyword;
+                
+                dict.find(keyword);
+                
+                break;
+
+            case 5:
+                cout << "Dictionary (Ascending Order):\n";
+                dict.display(true);
+                
+                break;
+
+            case 6:
+                cout << "Dictionary (Descending Order):\n";
+                dict.display(false);
+                
+                break;
+
+            case 7:
+                dict.findMinimum();
+                
+                break;
+
+            case 8:
+                cout << "Exiting program...\n";
+                break;
+
+            default:
+                cout << "Invalid choice! Try again.\n";
+        }
+        
+    } 
+    
+	while (choice != 8);
+
+    return 0;
+}
