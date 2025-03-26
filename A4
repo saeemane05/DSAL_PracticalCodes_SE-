@@ -1,102 +1,299 @@
-CONSIDER TELEPHONE BOOK DATABASE OF N CLIENTS. MAKE USE OF A HASH TABLE IMPLEMENTATION TO QUICKLY LOOK UP CLIENT‘S TELEPHONE NUMBER. 
-MAKE USE OF TWO COLLISION HANDLING TECHNIQUES AND COMPARE THEM USING NUMBER OF COMPARISONS REQUIRED TO FIND A SET OF TELEPHONE NUMBERS.
+TO CREATE ADT THAT IMPLEMENTS THE "SET" CONCEPT.
+A. ADD (NEW ELEMENT) - PLACE A VALUE INTO THE SET.
+B. REMOVE (ELEMENT) - REMOVE THE VALUE.
+C. CONTAINS (ELEMENT) - RETURN TRUE IF ELEMENT IS IN COLLECTION.
+D. SIZE () - RETURN NUMBER OF VALUES IN COLLECTION.
+E. ITERATOR () - RETURN AN ITERATOR USED TO LOOP OVER COLLECTION.
+F. INTERSECTION OF TWO SETS.
+G. UNION OF TWO SETS.
+H. DIFFERENCE BETWEEN TWO SETS.
+I. SUBSET.
+
+class Set:
+def __init__(self, elements=None):
+self.data = []
+if elements:
+for item in elements:
+self.add(item)
+
+def add(self, element):
+
+for item in self.data:
+
+if item == element:
+
+return
+
+self.data += [element]
+
+print(f"Element {element} added to the set.")
 
 
-def linearProbing(contacts, m, n):
 
-    def hash_function(phone_number, n):
-        return phone_number % n
-       
+def remove(self, element):
 
-    def LinearProbingWithoutReplacement(contacts, name, phone_number, n):
-   
-        index = hash_function(phone_number, n)
-       
+found = False
 
-        while contacts[index] is not None:
-            index = (index + 1) % n
+for i in range(len(self.data)):
 
-        contacts[index] = (name, phone_number)
-       
-        print(f"Inserted {name} with phone number {phone_number} at index {index}")
-       
+if self.data[i] == element:
 
-    for i in range(m):
-   
-        name = input(f"ENTER NAME OF MEMBER {i + 1}: ")
-       
-        phone_number = int(input(f"ENTER PHONE NUMBER of {name}: "))
-       
-        LinearProbingWithoutReplacement(contacts, name, phone_number, n)
-       
+found = True
 
-    print("\nFinal Hash Table after Linear Probing:")
-   
-    for i in range(n):
-   
-        if contacts[i] is not None:
-       
-            print(f"Index {i}: {contacts[i]}")
-           
-    print(contacts)
+break
+if found == False:
+
+print("ELEMENT NOT PRESENT...")
+
+def contains(self, element):
+
+if element in self.data:
+
+print(f"ELEMENT {element} FOUND!")
+
+return True
+
+else:
+print("ELEMENT NOT FOUND!")
+
+return False
 
 
-def double_hashing(contacts, m, n):
 
-    def hashfunction1(phone_number, n):
-        return phone_number % n  
+def size(self):
+return len(self.data)
 
-    def hashfunction2(phone_number, n):
-        return 1 + (phone_number % (n - 1))  
 
-    def hashing(contacts, name, phone_number, n):
-        index = hashfunction1(phone_number, n)
-        step = hashfunction2(phone_number, n)
+def intersection(self, other):
 
-        while contacts[index] is not None:
-            index = (index + step) % n  
+result = Set()
 
-        contacts[index] = (name, phone_number)
-        print(f"Inserted {name} with ph_no {phone_number} at {index}th index")
+for i in self.data:
 
-    for i in range(m):
-   
-        name = input(f"ENTER NAME OF MEMBER {i + 1}: ")
-       
-        phone_number = int(input(f"ENTER PHONE NUMBER of {name}: "))
-       
-        hashing(contacts, name, phone_number, n)
+found = False
 
-    print("\nFinal Hash Table after Double Probing:")
-   
-    for i in range(n):
-   
-        if contacts[i] is not None:
-       
-            print(f"Index {i}: {contacts[i]}")
-           
-    print(contacts)
+for j in result.data:
 
+if i == j:
+found = True
+break
+
+if found:
+
+result.data += [i]
+
+print("INTERSECTION OF THE TWO SETS IS:", result.data)
+
+
+def union(self, other):
+
+result = Set(self.data)
+
+for i in self.data:
+
+found = False
+
+for j in result.data:
+
+if i == j :
+
+found = True
+break
+
+if found == False:
+result.data += [i]
+
+print("UNION OF THE TWO SETS IS:", result.data)
+
+
+
+def difference(self, other):
+
+result = Set()
+
+for i in self.data:
+
+found = False
+
+for j in result.data:
+
+if i == j :
+
+found = True
+break
+
+if found == False:
+result.data += [i]
+
+print("DIFFERENCE OF THE TWO SETS IS:", result.data)
+
+
+def subset(self, other):
+
+for i in self.data:
+
+if i not in other.data:
+
+return False
+
+return True
+
+
+def __iter__(self):
+
+print("USE OF ITERATOR:")
+
+return iter(self.data)
 
 def main():
-    n = int(input("ENTER DICTIONARY SIZE: "))
-    m = int(input("ENTER THE NO OF MEMBERS: "))
-    contacts = [None] * n  
+set1 = Set()
+set2 = Set()
 
-    print("1. LINEAR PROBING WITH REPLACEMENT\n2. DOUBLE HASHING\n3. EXIT\n")
+while True:
+print("\n<----SET OPERATIONS MENU---->")
+print("1. ADD ELEMENT IN SET A")
+print("2. ADD ELEMENT IN SET B")
+print("3. REMOVE ELEMENT FROM SET A")
+print("4. REMOVE ELEMENT FROM SET B")
+print("5. CHECK IF ELEMENT EXISTS IN SET A")
+print("6. CHECK IF ELEMENT EXISTS IN SET B")
+print("7. DISPLAY SIZE OF SET A")
+print("8. DISPLAY SIZE OF SET B")
+print("9. UNION OF SET A AND SET B")
+print("10. INTERSECTION OF SET A AND SET B")
+print("11. DIFFERENCE => SET A - SET B")
+print("12. DIFFERENCE => SET B - SET A")
+print("13. CHECK IF SET A IS A SUBSET OF SET B")
+print("14. CHECK IF SET B IS A SUBSET OF SET A")
+print("15. DISPLAY SET A")
+print("16. DISPLAY SET B")
+print("17. ITERATOR OVER THE SET A")
+print("18. ITERATOR OVER THE SET B")
+print("19. EXIT")
 
-    choice = int(input("ENTER YOUR CHOICE: "))
-   
-    if choice == 1:
-         linearProbing(contacts, m, n)  
-    elif choice == 2:
-         double_hashing(contacts, m, n)
-    elif choice == 3:
-         print("EXITING THANK YOU.")
-         return 0
-    else:
-         print("INVALID CHOICE!")
-         return 1  
+choice = int(input("ENTER YOUR CHOICE: "))
 
+if choice == 1:
+
+element = int(input("Enter element to add to Set A: "))
+set1.add(element)
+
+
+elif choice == 2:
+
+element = int(input("Enter element to add to Set B: "))
+set2.add(element)
+
+
+elif choice == 3:
+
+element = int(input("Enter element to remove from Set A: "))
+set1.remove(element)
+
+
+elif choice == 4:
+
+element = int(input("Enter element to remove from Set B: "))
+set2.remove(element)
+
+
+elif choice == 5:
+
+element = int(input("Enter element to check in Set A: "))
+set1.contains(element)
+
+
+elif choice == 6:
+
+element = int(input("Enter element to check in Set B: "))
+set2.contains(element)
+
+
+elif choice == 7:
+
+print(f"Size of Set A: {set1.size()}")
+
+
+elif choice == 8:
+
+print(f"Size of Set B: {set2.size()}")
+
+
+elif choice == 9:
+
+set1.union(set2)
+
+
+elif choice == 10:
+
+set1.intersection(set2)
+
+
+elif choice == 11:
+
+set1.difference(set2)
+
+
+elif choice == 12:
+
+set2.difference(set1)
+
+
+elif choice == 13:
+
+if set1.subset(set2):
+
+print("Set A is a subset of Set B.")
+
+else:
+
+print("Set A is NOT a subset of Set B.")
+
+
+elif choice == 14:
+
+
+if set2.subset(set1):
+
+print("Set B is a subset of Set A.")
+
+else:
+print("Set B is NOT a subset of Set A.")
+
+elif choice == 15:
+
+print("Set A:", set1.data)
+
+
+elif choice == 16:
+
+print("Set B:", set2.data)
+
+
+elif choice == 17:
+
+print("USING ITERATOR FOR Set A:", list(set1))
+
+
+elif choice == 18:
+
+print("USING ITERATOR FOR Set B:", list(set2))
+
+
+elif choice == 19:
+
+print("Exiting program...")
+
+
+break
+
+else:
+
+print("Invalid choice, please enter a valid option!")
+
+
+
+if __name__ == "__main__":
 main()
+
 
