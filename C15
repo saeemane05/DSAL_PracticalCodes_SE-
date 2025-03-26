@@ -1,0 +1,120 @@
+YOU HAVE A BUSINESS WITH SEVERAL OFFICES; YOU WANT TO LEASE PHONE LINES TO CONNECT THEM UP WITH EACH OTHER; 
+AND THE PHONE COMPANY CHARGES DIFFERENT AMOUNTS OF MONEY TO CONNECT DIFFERENT PAIRS OF CITIES. 
+YOU WANT A SET OF LINES THAT CONNECTS ALL YOUR OFFICES WITH A MINIMUM TOTAL COST. 
+SOLVE THE PROBLEM BY SUGGESTING APPROPRIATE DATA STRUCTURES.
+
+#include <iostream>
+#include <limits.h>
+using namespace std ;
+#define INF 9
+
+class Prims
+{
+public:
+int graph[10][10] ;
+int n ;
+int u , v ;
+Prims(int size)
+{
+n = size ;
+}
+void PrimsMST()
+{
+int selected[10] = {0} ;
+int totalCost = 0 ;
+
+selected[0] = 1 ;
+
+for(int edge = 0 ; edge<n ; edge ++)
+{
+
+int  minCost =  INF;
+u = -1 ;
+v = -1 ;
+
+
+
+for (int i = 0 ;i<n ; i++)
+{
+if(selected[i])
+{
+
+for(int j = 0 ; j<n ; j++)
+{
+if(!selected[j] && graph[i][j] && graph[i][j]< minCost)
+{
+minCost = graph[i][j] ;
+u = i ;
+v = j ;
+}
+}
+}
+
+}
+
+
+            if (v != -1)
+            {
+           
+                selected[v] = 1;
+               
+                totalCost += minCost;
+               
+                cout << u << " --> " << v << "  Cost: " << minCost << endl;
+               
+            }
+}
+
+cout<<"TOTAL MINIMUM DISTANCE ="<<totalCost<<endl ;
+}
+} ;
+int main()
+{  
+    int n;
+   
+    cout << "ENTER THE NUMBER OF CITIES: ";
+   
+    cin >> n;
+
+    Prims P(n);
+   
+
+    cout << "ENTER THE ADJACENCY MATRIX:\n";
+   
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+       
+            cin >> P.graph[i][j];
+        }
+       
+    }
+
+    cout << "Initial Graph representation:\n";
+   
+    for (int i = 0; i < n; i++)
+     {
+     
+     
+        for (int j = 0; j < n; j++)
+       
+        {
+            cout << P.graph[i][j] << " ";
+           
+        }
+       
+        cout << endl;
+    }
+
+ 
+   
+   
+
+    P.PrimsMST();
+
+   
+
+    return 0;
+   
+}
