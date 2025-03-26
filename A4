@@ -1,0 +1,98 @@
+def linearProbing(contacts, m, n):
+
+    def hash_function(phone_number, n):
+        return phone_number % n
+       
+
+    def LinearProbingWithoutReplacement(contacts, name, phone_number, n):
+   
+        index = hash_function(phone_number, n)
+       
+
+        while contacts[index] is not None:
+            index = (index + 1) % n
+
+        contacts[index] = (name, phone_number)
+       
+        print(f"Inserted {name} with phone number {phone_number} at index {index}")
+       
+
+    for i in range(m):
+   
+        name = input(f"ENTER NAME OF MEMBER {i + 1}: ")
+       
+        phone_number = int(input(f"ENTER PHONE NUMBER of {name}: "))
+       
+        LinearProbingWithoutReplacement(contacts, name, phone_number, n)
+       
+
+    print("\nFinal Hash Table after Linear Probing:")
+   
+    for i in range(n):
+   
+        if contacts[i] is not None:
+       
+            print(f"Index {i}: {contacts[i]}")
+           
+    print(contacts)
+
+
+def double_hashing(contacts, m, n):
+
+    def hashfunction1(phone_number, n):
+        return phone_number % n  
+
+    def hashfunction2(phone_number, n):
+        return 1 + (phone_number % (n - 1))  
+
+    def hashing(contacts, name, phone_number, n):
+        index = hashfunction1(phone_number, n)
+        step = hashfunction2(phone_number, n)
+
+        while contacts[index] is not None:
+            index = (index + step) % n  
+
+        contacts[index] = (name, phone_number)
+        print(f"Inserted {name} with ph_no {phone_number} at {index}th index")
+
+    for i in range(m):
+   
+        name = input(f"ENTER NAME OF MEMBER {i + 1}: ")
+       
+        phone_number = int(input(f"ENTER PHONE NUMBER of {name}: "))
+       
+        hashing(contacts, name, phone_number, n)
+
+    print("\nFinal Hash Table after Double Probing:")
+   
+    for i in range(n):
+   
+        if contacts[i] is not None:
+       
+            print(f"Index {i}: {contacts[i]}")
+           
+    print(contacts)
+
+
+def main():
+    n = int(input("ENTER DICTIONARY SIZE: "))
+    m = int(input("ENTER THE NO OF MEMBERS: "))
+    contacts = [None] * n  
+
+    print("1. LINEAR PROBING WITH REPLACEMENT\n2. DOUBLE HASHING\n3. EXIT\n")
+
+    choice = int(input("ENTER YOUR CHOICE: "))
+   
+    if choice == 1:
+         linearProbing(contacts, m, n)  
+    elif choice == 2:
+         double_hashing(contacts, m, n)
+    elif choice == 3:
+         print("EXITING THANK YOU.")
+         return 0
+    else:
+         print("INVALID CHOICE!")
+         return 1  
+
+main()
+
